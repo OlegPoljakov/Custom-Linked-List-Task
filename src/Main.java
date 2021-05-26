@@ -21,6 +21,15 @@ public class Main {
         list.deleteElement(800);
         System.out.println("list is: " + list.printList());
 
+        list.deleteElement(69);
+        System.out.println("list is: " + list.printList());
+
+        list.deleteElement(66);
+        System.out.println("list is: " + list.printList());
+
+        list.deleteElement(8);
+        System.out.println("list is: " + list.printList());
+
         System.out.println(list.getNMaxElements(1));
 
     }

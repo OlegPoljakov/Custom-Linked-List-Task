@@ -40,6 +40,7 @@ public class CustomLinkedList {
 
     //Удаление элемента из списка
     public void deleteElement(int num){
+
         //Пустой список - удалять нечего
         if (RightElement == null){
             return;
@@ -57,16 +58,41 @@ public class CustomLinkedList {
                 return;
             }
         }
-        //Если в списке много элементов, ищем те, которые надо удалить
+
+        //Если удаляемый элемент - крайний слева
+        if(LeftElement.data == num){
+            LeftElement = LeftElement.next;
+            return;
+        }
+
+        //Все кроме первого
         else {
             Element temp = LeftElement;
-            while (temp != null) {
-                if (temp.next.data == num) {
-                    temp.next = temp.next.next; //перескакиваем удаляемый элемент
+            while(temp.next != null){
+                if(temp.next.data == num){
+                    //Если он последний
+                    if(temp.next == RightElement) {
+                        RightElement = temp;
+                    }
+                    temp.next = temp.next.next;   //найденный элемент выкидываем. Если последний, то ссылаемся на null
+                    return;
                 }
                 temp = temp.next;
             }
         }
+
+        /*
+        else {
+            Element temp = LeftElement;
+            while (temp != null) {
+                if(temp.data == num){
+                    LeftElement = temp.next;
+                    temp = null;
+                }
+                temp = LeftElement;
+            }
+        }
+        */
     }
 
     //Возврат строки с элементами списка. Числа разделены запятыми.
@@ -91,7 +117,7 @@ public class CustomLinkedList {
     }
 
     /*
-    Сортировка пузырьком по возрастанию. 
+    Сортировка пузырьком по возрастанию.
     Bubble sort:
             for bypass in range (1,N)         -> for bypass in range (0,N-1)
         for k in range (0,N-bypass)   ->     for k in range (0,N-bypass-1)
