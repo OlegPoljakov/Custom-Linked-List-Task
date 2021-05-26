@@ -1,101 +1,91 @@
 
 public class CustomLinkedList {
 
-    private Element LeftElement; //левый элимент списка
-    private Element RightElement; //правый элимент списка
-    private int numOfElements; //Изначально null элементов - пустой список
+    private Element LeftElement; //Left element of the List
+    private Element RightElement; //Right element of the List
+    private int numOfElements; //number of list elements. 0 in the beginning
 
-    //Добавление элемента слева
+    //Add element to the left side
     public void addElementToLeft(int num){
         Element elem = new Element(num);
-        //Если список пуст - начальное состояние, просто добавляем элемент
+        //If list is empty - initial state, just add an element
         if(RightElement == null){
             LeftElement = elem;
             RightElement = elem;
             numOfElements++;
         }
         else {
-            elem.next = LeftElement; //ДобавлЯЕМЫЙ элемент ссылается на элемент слева
-            LeftElement = elem; //ДобавлЯЕМЫЙ элмент стал левым
+            elem.next = LeftElement; //Element being added refers to the left element of the list
+            LeftElement = elem; //Element being added became left
             numOfElements++;
         }
     }
 
-    //Добавление элемента справа
+    //Add element to the left side
     public void addElementToRight(int num){
         Element elem = new Element(num);
-        //Если список пуст - начальное состояние, просто добавляем элемент
+        //If list is empty - initial state, just add an element
         if(RightElement == null){
             LeftElement = elem;
             RightElement = elem;
             numOfElements++;
         }
         else {
-            RightElement.next = elem; //ДобавлЯЕМЫЙ элемент ссылается на элемент справа
-            RightElement = elem; //ДобавлЯЕМЫЙ элмент стал правым
+            RightElement.next = elem; //Element being added is refered by the right element of the list
+            RightElement = elem; //Element being added became right
             numOfElements++;
         }
     }
 
 
-    //Удаление элемента из списка
+    //Delete element from the list
     public void deleteElement(int num){
 
-        //Пустой список - удалять нечего
+        //Empty List - nothing to be deleted
         if (RightElement == null){
             return;
         }
-        //Если в списке один элемент
+
+        //If only one element in a list
         if (RightElement == LeftElement) {
-            //и он тот, который надо удалить
+            //If this is the element which has to be deleted
             if (RightElement.data == num) {
                 RightElement = null;
                 LeftElement = null;
+                numOfElements--;
                 return;
             }
-            //Если не тот, который надо удалить
+            //Quit if this element is not which has to be deleted
             else {
                 return;
             }
         }
 
-        //Если удаляемый элемент - крайний слева
+        //If deleted element - is the last right one
         if(LeftElement.data == num){
             LeftElement = LeftElement.next;
+            numOfElements--;
             return;
         }
 
-        //Все кроме первого
+        //All elements except the first one
         else {
             Element temp = LeftElement;
             while(temp.next != null){
                 if(temp.next.data == num){
-                    //Если он последний
                     if(temp.next == RightElement) {
                         RightElement = temp;
                     }
-                    temp.next = temp.next.next;   //найденный элемент выкидываем. Если последний, то ссылаемся на null
+                    temp.next = temp.next.next;   //Throw away the found element. If its the last one, than it holds reference to null
+                    numOfElements--;
                     return;
                 }
                 temp = temp.next;
             }
         }
-
-        /*
-        else {
-            Element temp = LeftElement;
-            while (temp != null) {
-                if(temp.data == num){
-                    LeftElement = temp.next;
-                    temp = null;
-                }
-                temp = LeftElement;
-            }
-        }
-        */
     }
 
-    //Возврат строки с элементами списка. Числа разделены запятыми.
+    //Returns string with list elements separated by commas
     public String printList(){
         String output = "";
         if (RightElement == null){
@@ -117,7 +107,7 @@ public class CustomLinkedList {
     }
 
     /*
-    Сортировка пузырьком по возрастанию.
+    Bubble sort, increase
     Bubble sort:
             for bypass in range (1,N)         -> for bypass in range (0,N-1)
         for k in range (0,N-bypass)   ->     for k in range (0,N-bypass-1)
@@ -127,17 +117,19 @@ public class CustomLinkedList {
         for (int i = 0; i < numOfElements-1; i++){
             temp = LeftElement;
             for(int k = 0; k < numOfElements - i - 1; k++){
-                if (temp.data > temp.next.data){
-                    int swapeddata = temp.data;
-                    temp.data = temp.next.data;
-                    temp.next.data = swapeddata;
+                if(temp.next != null){
+                    if (temp.data > temp.next.data){
+                        int swapeddata = temp.data;
+                        temp.data = temp.next.data;
+                        temp.next.data = swapeddata;
+                    }
+                    temp = temp.next;
                 }
-                temp = temp.next;
             }
         }
     }
 
-    //Возврат строки с N максимальных элементов списка. Числа разделены запятыми.
+    //Returns string with N max elements from the list. Numbers are separated by commas
     public String getNMaxElements(int num){
 
         if(LeftElement == null) {
